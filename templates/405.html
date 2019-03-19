@@ -1,0 +1,15 @@
+{% extends "header.html" %}
+
+{% block body %}
+
+<div class="container">
+<h1> 405 -- Method Not Allowed!</h1>
+
+<p>Ooopsie! You are not allowed to do that!</p>
+    
+<a href ="javascript:history.go(-1)"><button type="button" class="btn btn-outline-info">Go Back</button></a>
+    
+<img src="{{url_for('static',filename='images/Corgi #4.gif')}}" style="width: 35%">
+</div>
+
+{% endblock %}

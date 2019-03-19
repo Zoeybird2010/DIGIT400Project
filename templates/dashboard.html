@@ -1,0 +1,62 @@
+{% extends "header.html" %}
+
+{% block body %}
+
+<!-- Nav Tabs -->
+
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Home</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Contact</a>
+  </li>
+    <li class="nav-item">
+    <a class="nav-link" id="messages-tab" data-toggle="tab" href="#messages" role="tab" aria-controls="messages" aria-selected="false">Messages</a>
+  </li>
+</ul> <!-- End Nav Tab-->
+
+<!--Tab Content-->
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">...</div>
+    <div class ="card-deck">
+    {% for i in APP_CONTENT["Home"]%}
+    <div class="card">
+    <img src="https://media.giphy.com/media/ybEXZcycd789q/giphy.gif" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">{{i[0]}}</h5>
+      <p class="card-text">{{i[2]}}</p>
+       <a href="{{i[1]}}" class="btn btn-info">{{i[0]}}</a>
+    </div>
+  </div>
+    {% endfor %}
+    </div>
+
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
+    <div class ="card-deck">
+    {% for i in APP_CONTENT["Profile"]%}
+    <div class="card">
+    <img src="https://media.giphy.com/media/cIQkxw4G65TG/giphy.gif" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">{{i[0]}}</h5>
+      <p class="card-text">{{i[2]}}</p>
+       <a href="{{i[1]}}" class="btn btn-info">{{i[0]}}</a>
+    </div>
+  </div>
+    {% endfor %}
+    </div>
+    
+    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
+     {% for i in APP_CONTENT["Contact"]%}
+    {% endfor %}
+   
+    <div class="tab-pane fade" id="messages" role="tabpanel" aria-labelledby="messages-tab">...</div>
+     {% for i in APP_CONTENT["Messages"]%}
+    {% endfor %}
+</div> <!-- End Tab Content-->
+
+{% endblock %}
