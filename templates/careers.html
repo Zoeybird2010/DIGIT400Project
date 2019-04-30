@@ -1,0 +1,44 @@
+{% extends "header.html" %}
+
+{% block body %}
+
+    <!-- Nav Tabs -->
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" id="companies-tab" data-toggle="tab" href="#companies" role="tab" aria-controls="companies" aria-selected="true">Companies</a>
+      </li>
+    </ul><!-- END Nav Tabs -->
+
+     <div class="tab-content" id="myTabContent">
+      <div class="tab-pane fade show active" id="anime" role="tabpanel" aria-labelledby="anime-tab">
+          
+        <div class="card-deck">
+          {% for i in APP_CONTENT["ABC"] %}
+          
+          <div class="card" style="width: 18rem;">
+              <img src="https://previews.123rf.com/images/sellingpix/sellingpix1303/sellingpix130300022/18762198-3d-font-creative-abc-collection-isolated-alphabet-type-letters-with-numbers-and-symbols-high-quality.jpg" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">{{i[0]}}</h5>
+                <p class="card-text">{{i[2]}}</p>
+                <a href="{{i[1]}}" class="btn btn-primary">{{i[0]}}</a>
+              </div>
+            </div>
+          {% endfor %}
+          </div>
+         </div>
+</div>
+
+<style type="text/css">
+    body
+    {
+        background-color: aquamarine;
+    }
+    #myTabContent{
+        font-family: 'Lobster', cursive;
+
+    }
+    #myTab{
+        font-family: 'Lobster', cursive;
+</style>
+
+{% endblock %}

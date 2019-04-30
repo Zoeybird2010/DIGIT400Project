@@ -2,61 +2,111 @@
 
 {% block body %}
 
-<!-- Nav Tabs -->
+    <!-- Nav Tabs -->
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Topics</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="positions-tab" data-toggle="tab" href="#positions" role="tab" aria-controls="positions" aria-selected="false">Positions</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="about-tab" data-toggle="tab" href="#about" role="tab" aria-controls="about" aria-selected="false">About</a>
+      </li>
+      <!--<li class="nav-item">
+        <a class="nav-link" id="messages-tab" data-toggle="tab" href="#messages" role="tab" aria-controls="messages" aria-selected="false">Messages</a>
+      </li>-->
+    </ul><!-- END Nav Tabs -->
 
-<ul class="nav nav-tabs" id="myTab" role="tablist">
-  <li class="nav-item">
-    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Home</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Contact</a>
-  </li>
-    <li class="nav-item">
-    <a class="nav-link" id="messages-tab" data-toggle="tab" href="#messages" role="tab" aria-controls="messages" aria-selected="false">Messages</a>
-  </li>
-</ul> <!-- End Nav Tab-->
+     <div class="tab-content" id="myTabContent">
+      <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+          
+        <div class="card-deck">
+          {% for i in APP_CONTENT["Home"] %}
+          
+          <div class="card" style="width: 18rem;">
+              <img src="{{i[3]}}" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">{{i[0]}}</h5>
+                <p class="card-text">{{i[2]}}</p>
+                <a href="{{i[1]}}" class="btn btn-primary">{{i[0]}}</a>
+              </div>
+            </div>
+          
+          {% endfor %}
+          </div>
+        </div>
+      <!--<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+          <div class="card-deck">
+        {% for i in APP_CONTENT["Profile"] %}
+          <div class="card" style="width: 18rem;">
+              <img src="https://avatarfiles.alphacoders.com/100/100791.png" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">{{i[0]}}</h5>
+                <p class="card-text">{{i[2]}}</p>
+                <a href="{{i[1]}}" class="btn btn-primary">{{i[0]}}</a>
+              </div>
+            </div>
+        {% endfor %}
+          </div>
+        </div>
+        <div class="tab-pane fade" id="messages" role="tabpanel" aria-labelledby="profile-tab">
+        <div class="card-deck">
+        {% for i in APP_CONTENT["Messages"] %}
+          <div class="card" style="width: 18rem;">
+              <img src="http://data.whicdn.com/images/119459604/original.gif" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">{{i[0]}}</h5>
+                <p class="card-text">{{i[2]}}</p>
+                <a href="{{i[1]}}" class="btn btn-primary">{{i[0]}}</a>
+              </div>
+            </div>
+        {% endfor %}
+            </div> 
+        </div><-->
+      <div class="tab-pane fade" id="about" role="tabpanel" aria-labelledby="about-tab">
+        <div class="card-deck">
+          {% for i in APP_CONTENT["About"] %}
+            <div class="card" style="width: 18rem;">
+              <img src="http://1.bp.blogspot.com/-7dvcuSznS2A/UbtqiFMrSNI/AAAAAAAAAuY/HalLgLohqaQ/s1600/tumblr_m68ceePZ0F1qbvovho1_500.gif" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">{{i[0]}}</h5>
+                <p class="card-text">{{i[2]}}</p>
+                <a href="{{i[1]}}" class="btn btn-primary">{{i[0]}}</a>
+              </div>
+            </div>
+          {% endfor %}
+          </div>
+        </div>
+         <div class="tab-pane fade" id="positions" role="tabpanel" aria-labelledby="positions-tab">
+         <div class="card-deck">
+          {% for i in APP_CONTENT["Positions"] %}
+          <div class="card" style="width: 18rem;">
+              <img src="https://media1.tenor.com/images/0305354667a7acce09831e8d1dd38b21/tenor.gif?itemid=4469344" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">{{i[0]}}</h5>
+                <p class="card-text">{{i[2]}}</p>
+                <a href="{{i[1]}}" class="btn btn-primary">{{i[0]}}</a>
+              </div>
+            </div>
+          {% endfor %}
+          </div>
+        </div>
+    </div><!-- END Tab Content -->
 
-<!--Tab Content-->
-<div class="tab-content" id="myTabContent">
-  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">...</div>
-    <div class ="card-deck">
-    {% for i in APP_CONTENT["Home"]%}
-    <div class="card">
-    <img src="https://media.giphy.com/media/ybEXZcycd789q/giphy.gif" class="card-img-top" alt="...">
-    <div class="card-body">
-      <h5 class="card-title">{{i[0]}}</h5>
-      <p class="card-text">{{i[2]}}</p>
-       <a href="{{i[1]}}" class="btn btn-info">{{i[0]}}</a>
-    </div>
-  </div>
-    {% endfor %}
-    </div>
+<style type="text/css">
+    body{
+        background-color:darkcyan;
+    }
+    #myTabContent
+    {
+        font-family: 'Lobster', cursive;
+    }
+    #myTab
+    {
+        font-family: 'Lobster', cursive;
+    }
 
-    <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
-    <div class ="card-deck">
-    {% for i in APP_CONTENT["Profile"]%}
-    <div class="card">
-    <img src="https://media.giphy.com/media/cIQkxw4G65TG/giphy.gif" class="card-img-top" alt="...">
-    <div class="card-body">
-      <h5 class="card-title">{{i[0]}}</h5>
-      <p class="card-text">{{i[2]}}</p>
-       <a href="{{i[1]}}" class="btn btn-info">{{i[0]}}</a>
-    </div>
-  </div>
-    {% endfor %}
-    </div>
-    
-    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
-     {% for i in APP_CONTENT["Contact"]%}
-    {% endfor %}
-   
-    <div class="tab-pane fade" id="messages" role="tabpanel" aria-labelledby="messages-tab">...</div>
-     {% for i in APP_CONTENT["Messages"]%}
-    {% endfor %}
-</div> <!-- End Tab Content-->
+</style>
 
 {% endblock %}

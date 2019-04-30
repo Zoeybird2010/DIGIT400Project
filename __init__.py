@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, flash, redirect, request, session
+from flask import Flask, render_template, url_for, flash, redirect, request, session, make_response, send_file
 from wtforms import Form, BooleanField, TextField, PasswordField, validators
 from passlib.hash import sha256_crypt
 from pymysql import escape_string as thwart
@@ -6,11 +6,19 @@ from functools import wraps
 from datetime import datetime, timedelta
 import gc
 import os, sys; sys.path.append(os.path.dirname(os.path.realpath(__file__)))
+from werkzeug.utils import secure_filename
 from content import Content
 from db_connect import connection 
 
+UPLOAD_FOLDER = "/var/www/FlaskApp/FlaskApp/uploads"
+ALLOWED_EXTENSION = set(["txt","pdf","png","jpg","jpeg","gif"])
 
 app = Flask(__name__)
+
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
+
+def allowed_file(filename):
+    return "." in filename and filename.rssplit(".", 1)[1].lower() in ALLOWED_EXTENSION
 
 def login_required(f):
     @wraps(f)
@@ -30,26 +38,28 @@ def index():
     try:
         c, conn = connection()
         if request.method == "POST":
-            data = c.execute("SELECT * users WHERE username = ('{0}')".format(thwart(request.form["username"])))
+            data = c.execute("SELECT * FROM users WHERE username = ('{0}')".format(thwart(request.form['username'])))
+            
             data = c.fetchone()[2]
             
-            if sha256_crypt.verify(request.form["password"], data):
-                session["logged_in"] = True
-                session["username"] = request.form["username"]
+            if sha256_crypt.verify(request.form["password"],data):
+                session['logged_in'] =True
+                session['username'] = request.form['username']
                 
-                flash("You are now logged in!" + session["username"] + "Welcome")
+                flash("You are now logged in "+session['username']+"!")
                 return redirect(url_for("dashboard"))
             else:
-                error ="Invaild credentials, try again!"
-        return render_template("login.html", error = error)
+                error = "Invalid credentials, try again."
+                
+        return render_template("main.html", error = error)
     
     except Exception as e:
-        flash(e) #remove for production
-        error = "Invalid creditials, try again!"
-    return render_template("main.html", error = error)
+        flash(e) # remove for production
+        error = "Invalid creditials, try again."
+        return render_template("main.html", error = error)
 
-@login_required 
 @app.route("/dashboard/")
+@login_required
 def dashboard():
     try:
         flash("You should check in some of the fields below!")
@@ -63,7 +73,7 @@ def login():
     try:
         c, conn = connection()
         if request.method == "POST":
-            data = c.execute("SELECT * users WHERE username = ('{0}')".format(thwart(request.form["username"])))
+            data = c.execute("SELECT * FROM users WHERE username = ('{0}')".format(thwart(request.form["username"])))
             data = c.fetchone()[2]
             
             if sha256_crypt.verify(request.form["password"], data):
@@ -96,7 +106,7 @@ class RegistrationForm(Form):
     confirm = PasswordField("Repeat Password")
     accept_tos = BooleanField("I accept Terms of Serivce and Privary Notice", [validators.Required()])
 
-@app.route("/register/", methods=["GET","POST"])
+@app.route('/register/', methods=["GET","POST"])
 def register_page():
     try:
         form = RegistrationForm(request.form)
@@ -104,50 +114,155 @@ def register_page():
             username = form.username.data
             email = form.email.data
             password = sha256_crypt.encrypt((str(form.password.data)))
-            
+
             c, conn = connection()
-            
-            x = c.execute("SELECT * FROM users WHERE username = ('{0}')".format((thwart(username))))
-            
+
+            x = c.execute("SELECT * FROM users WHERE username= ('{0}')".format((thwart(username))))
+
             if int(x) > 0:
-                flash("That username is already taken, please chooose another.")
-                return render_template("register.html", form=form)
+                flash("That username is already taken, please choose another")
+                return render_template("register.html", form = form)
             else:
-                c.execute("INSERT INTO users (username,password,email,tracking) VALUES ('{0}','{1}', '{2}','{3}')".format(thwart(username), thwart(password), thwart(email), thwart("/dashboard/")))
-                
-                conn.commit()
-                flash("Thanks for registering" + username)
-                conn.close()
-                gc.collect()
-                
-                session['logged_in'] = True
-                session['username'] = username
-                
-                return redirect(url_for("dashboard"))
-        return render_template("register.html",form = form)
+                c.execute("INSERT INTO users(username, password, email, tracking) VALUES ('{0}','{1}','{2}','{3}')".format(thwart(username),thwart(password),thwart(email),thwart("/dashboard/")))
+
+            conn.commit()
+            flash("Thanks for registering!")
+            c.close()
+            conn.close()
+            gc.collect()
+
+            session['logged_in'] = True
+            session['username'] = username
+
+            return redirect(url_for("dashboard"))
+
+        return render_template("register.html", form = form)
+    except Exception as e:
+        return str(e)
     
-#SITEMAP
-@app.route('/sitemap.xml/', methods= ["GET"])
+@app.route("/about/")
+def about():
+    try:
+        return render_template("about.html", APP_CONTENT = APP_CONTENT)
+    except Exception as e:
+        return render_template("500.html", error = e)
+    
+@app.route("/anime/")
+def anime():
+    try:
+        flash("Welcome fellow Anime Fan!")
+        return render_template("anime.html", APP_CONTENT = APP_CONTENT)
+    except Exception as e:
+        return render_template("500.html", error = e)
+    
+@app.route("/companies/")
+def careers():
+    try:
+        flash("Looking for a career I see!")
+        return render_template("careers.html", APP_CONTENT = APP_CONTENT)
+    except Exception as e:
+        return render_template("500.html", error = e)
+    
+@app.route("/positions/")
+def positions():
+    try:
+        return render_template("positions.html", APP_CONTENT = APP_CONTENT)
+    except Exception as e:
+        return render_template("500.html", error = e)
+    
+@app.route("/living/")
+def living():
+    try:
+        return render_template("living.html", APP_CONTENT = APP_CONTENT)
+    except Exception as e:
+        return render_template("500.html", error = e)
+
+@app.route("/AH/")
+def AH():
+    try:
+        return render_template("AH.html", APP_CONTENT = APP_CONTENT)
+    except Exception as e:
+        return render_template("500.html", error = e)
+    
+@app.route("/IP/")
+def IP():
+    try:
+        return render_template("IP.html", APP_CONTENT = APP_CONTENT)
+    except Exception as e:
+        return render_template("500.html", error = e)
+    
+@app.route("/QZ/")
+def QZ():
+    try:
+        return render_template("QZ.html", APP_CONTENT = APP_CONTENT)
+    except Exception as e:
+        return render_template("500.html", error = e)
+    
+@app.route("/welcome/")
+def welcome_to_jinja():
+    try:
+        #This is where the Python goes
+        def my_function():
+            output = ["DIGIT 400 is good", "Python, Java, php, SQL, C++" "<p><strong>hello world!</strong></p>", 42, "42"]
+            return output
+        
+        output = my_function()
+        
+        return render_template("templating_demo.html", output = output)
+    except Exception as e:
+        return str(e)
+    
+@app.route("/uploads/", methods=["GET", "POST"])
+@login_required
+def upload_file():
+    try:
+        if request.method == "POST":
+            if "file" not in request.files:
+                flash("No file part")
+                return redirect(request.url)
+            file == request.files["file"]
+            if file.filename == "":
+                flash("No selected file")
+                return redirect(request.url)
+            if file and allowed_file(file.filename):
+                filename = secure_filename(file.filename)
+                file.save(os.path.join(app.config["UPLOAD_FOLDER", filename]))
+                flash("All done!"+ str(filename)+ "uploaded successfully!")
+                return render_template("uploads.html", filename = filename)
+        return render_template("uploads.html")
+    except Exception as e:
+        return str(e)
+    
+@app.route("/downloads/")
+@login_required
+def download():
+    try:
+        return send_file("/var/www/FlaskApp/FlaskApp/uploads", attachment_filename)
+    except Exception as e:
+        return str(e)
+    
+
+@app.route('/sitemap.xml/', methods=["GET"])
 def sitemap():
     try:
         pages = []
         week = (datetime.now() - timedelta(days = 7)).date().isoformat()
-        for rule in app.url.iter_rules():
+        for rule in app.url_map.iter_rules():
             if "GET" in rule.methods and len(rule.arguments) == 0:
-                pages.append(["http://157.230.48.168" + str(rule.rule, week)])
-        sitemap_xml = render_template('sitemap_template.xml', pages= pages)
+                pages.append(["http://157.230.48.168"+str(rule.rule), week])
+        
+        sitemap_xml = render_template('sitemap_template.xml', pages = pages)
         response = make_response(sitemap_xml)
-        response.headers["Content=Type"] = "application/xml"
+        response.headers["Content-Type"] = "application/xml"
+        return response
+    
     except Exception as e:
         return(str(e))
-    
+
 @app.route("/robots.txt")
 def robots():
     return("User-agent: \nDisallow: /login \nDisallow: /register")
-                    
-    
-    except Exception as e:
-        return(str(e)) #remember to remove! for debugging only!
+
 
 #Error Handlers 
 @app.errorhandler(404)
