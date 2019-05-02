@@ -1,0 +1,81 @@
+{% extends "header.html" %}
+
+{% block body %}
+
+<head>
+</head>
+<body>
+
+<center><p>Companies down below! Take a look!</p></center>
+<div class="row">
+  <div class="col-3">
+    <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+      <a class="nav-link" id="v-pills-Right-tab" data-toggle="pill" href="#v-pills-Right" role="tab" aria-controls="v-pills-Right" aria-selected="false">Right Stuf</a>
+      <a class="nav-link" id="v-pills-Sentai-tab" data-toggle="pill" href="#v-pills-Sentai" role="tab" aria-controls="v-pills-Sentai" aria-selected="false">Sentai FilmWorks</a>
+      <a class="nav-link" id="v-pills-Viz-tab" data-toggle="pill" href="#v-pills-Viz" role="tab" aria-controls="v-pills-Viz" aria-selected="false">Viz Media</a>
+    </div>
+  </div>
+  <div class="col-9">
+    <div class="tab-content" id="v-pills-tabContent">
+            <div class="tab-pane fade" id="v-pills-Right" role="tabpanel" aria-labelledby="v-pills-Right-tab">
+        <br>
+            <img src="https://proxy.duckduckgo.com/iu/?u=https%3A%2F%2Fi2.wp.com%2Foperationrainfall.com%2Fwp-content%2Fuploads%2F2016%2F08%2FRight-Stuf-Logo-FEATURE.jpg&f=1">
+            <br>
+          Company:
+          <br>
+          Location:
+          <br>
+          Titles:
+          <br>
+          Career Website 
+     </div>
+      <div class="tab-pane fade" id="v-pills-Sentai" role="tabpanel" aria-labelledby="v-pills-Sentai-tab">
+        <img src="https://proxy.duckduckgo.com/iu/?u=https%3A%2F%2Fmedia.glassdoor.com%2Fsqll%2F1160646%2Fsentai-filmworks-squarelogo-1536176433644.png&f=1" width="50%">
+          <br>
+          Company:
+          <br>
+          Location:
+          <br>
+          Titles:
+          <br>
+          Career Website:
+      </div>
+      <div class="tab-pane fade" id="v-pills-Viz" role="tabpanel" aria-labelledby="v-pills-Viz-tab">
+      <img src="https://proxy.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.animationmagazine.net%2Fwordpress%2Fwp-content%2Fuploads%2FVIZ-Media-logo-post.jpg&f=1" width="50%">
+          <br>
+          Company:
+          <br>
+          Location:
+          <br>
+          Titles:
+          <br>
+          Career Website
+      </div>
+    </div>
+  </div>
+</div>
+    
+<style>
+    body
+    {
+       background-color: aquamarine; 
+    }
+    .company
+    {
+    font-family: 'Lobster', cursive;
+    width: 1000px;
+    height: 500px;
+    background-color: lightblue;
+    position: absolute;
+    left: 300px;
+    bottom: 130px;
+    }
+    p
+    {
+      font-family: 'Lobster', cursive;  
+    }
+
+</style>
+</body>
+
+{% endblock %}

@@ -140,12 +140,12 @@ def register_page():
     except Exception as e:
         return str(e)
     
-@app.route("/about/")
-def about():
-    try:
-        return render_template("about.html", APP_CONTENT = APP_CONTENT)
-    except Exception as e:
-        return render_template("500.html", error = e)
+#@app.route("/about/")
+#def about():
+    #try:
+        #return render_template("about.html", APP_CONTENT = APP_CONTENT)
+    #except Exception as e:
+        #return render_template("500.html", error = e)
     
 @app.route("/anime/")
 def anime():
@@ -155,46 +155,87 @@ def anime():
     except Exception as e:
         return render_template("500.html", error = e)
     
-@app.route("/companies/")
+@app.route("/videogames/")
+def videogames():
+    try:
+        flash("Welcome fellow Video Game Fan!")
+        return render_template("videogames.html", APP_CONTENT = APP_CONTENT)
+    except Exception as e:
+        return render_template("500.html", error = e)
+
+#Companies
+@app.route("/companies(Anime)/")
 def careers():
     try:
         flash("Looking for a career I see!")
-        return render_template("careers.html", APP_CONTENT = APP_CONTENT)
+        return render_template("careers(Anime).html", APP_CONTENT = APP_CONTENT)
     except Exception as e:
         return render_template("500.html", error = e)
-    
+
+@app.route("/companies(VG)/")
+def careers2():
+    try:
+        flash("Looking for a career I see!")
+        return render_template("careers(VG).html", APP_CONTENT = APP_CONTENT)
+    except Exception as e:
+        return render_template("500.html", error = e)
+
+#Positions
 @app.route("/positions/")
 def positions():
     try:
         return render_template("positions.html", APP_CONTENT = APP_CONTENT)
     except Exception as e:
         return render_template("500.html", error = e)
-    
-@app.route("/living/")
-def living():
+
+#Schooling
+@app.route("/schooling(Anime)/")
+def schooling():
     try:
-        return render_template("living.html", APP_CONTENT = APP_CONTENT)
+        return render_template("schooling(Anime).html", APP_CONTENT = APP_CONTENT)
     except Exception as e:
         return render_template("500.html", error = e)
 
-@app.route("/AH/")
+#AH
+@app.route("/AH(Anime)/")
 def AH():
     try:
-        return render_template("AH.html", APP_CONTENT = APP_CONTENT)
+        return render_template("AH(Anime).html", APP_CONTENT = APP_CONTENT)
     except Exception as e:
         return render_template("500.html", error = e)
-    
-@app.route("/IP/")
+@app.route("/AH(VG)/")
+def AH2():
+    try:
+        return render_template("AH(VG).html", APP_CONTENT = APP_CONTENT)
+    except Exception as e:
+        return render_template("500.html", error = e)
+#IP
+@app.route("/IP(Anime)/")
 def IP():
     try:
-        return render_template("IP.html", APP_CONTENT = APP_CONTENT)
+        return render_template("IP(Anime).html", APP_CONTENT = APP_CONTENT)
     except Exception as e:
         return render_template("500.html", error = e)
-    
-@app.route("/QZ/")
+
+@app.route("/IP(VG)/")
+def IP2():
+    try:
+        return render_template("IP(VG).html", APP_CONTENT = APP_CONTENT)
+    except Exception as e:
+        return render_template("500.html", error = e)
+
+#QZ
+@app.route("/QZ(Anime)/")
 def QZ():
     try:
-        return render_template("QZ.html", APP_CONTENT = APP_CONTENT)
+        return render_template("QZ(Anime).html", APP_CONTENT = APP_CONTENT)
+    except Exception as e:
+        return render_template("500.html", error = e)
+
+@app.route("/QZ(VG)/")
+def QZ2():
+    try:
+        return render_template("QZ(Anime).html", APP_CONTENT = APP_CONTENT)
     except Exception as e:
         return render_template("500.html", error = e)
     
