@@ -195,6 +195,13 @@ def schooling():
         return render_template("schooling(Anime).html", APP_CONTENT = APP_CONTENT)
     except Exception as e:
         return render_template("500.html", error = e)
+    
+@app.route("/schooling(VG)/")
+def schooling2():
+    try:
+        return render_template("schooling(VG).html", APP_CONTENT = APP_CONTENT)
+    except Exception as e:
+        return render_template("500.html", error = e)
 
 #AH
 @app.route("/AH(Anime)/")
@@ -203,6 +210,7 @@ def AH():
         return render_template("AH(Anime).html", APP_CONTENT = APP_CONTENT)
     except Exception as e:
         return render_template("500.html", error = e)
+
 @app.route("/AH(VG)/")
 def AH2():
     try:
@@ -235,7 +243,7 @@ def QZ():
 @app.route("/QZ(VG)/")
 def QZ2():
     try:
-        return render_template("QZ(Anime).html", APP_CONTENT = APP_CONTENT)
+        return render_template("QZ(VG).html", APP_CONTENT = APP_CONTENT)
     except Exception as e:
         return render_template("500.html", error = e)
     
